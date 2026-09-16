@@ -70,3 +70,25 @@ npm run build       # type-check and build for production
 npm run test:unit   # run the unit tests for usePhotoGallery
 npm run lint
 ```
+
+## Running on Android
+
+This is a Capacitor app, so the same `src/` code also runs as a real
+native Android app — not just in a browser. The native `android/` project
+isn't committed (it's generated, so it's listed in `.gitignore`); generate
+it locally with:
+
+```bash
+npm run build
+npx cap add android   # first time only
+npx cap sync android   # after any change to src/ or plugins
+npx cap open android    # opens the project in Android Studio
+```
+
+### CI: automatic APK build
+
+`.github/workflows/android-build.yml` does the same steps on every push:
+build the web app, generate the Android project, compile a debug APK with
+Gradle, and upload it as a workflow artifact named
+`photo-gallery-debug-apk`, downloadable from the Actions run's summary
+page.
