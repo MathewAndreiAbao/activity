@@ -75,20 +75,21 @@ npm run lint
 
 This is a Capacitor app, so the same `src/` code also runs as a real
 native Android app — not just in a browser. The native `android/` project
-isn't committed (it's generated, so it's listed in `.gitignore`); generate
-it locally with:
+is committed to this repo (that's the normal Capacitor setup: the native
+project is checked in, only its build output — `.gradle/`, `build/`,
+`local.properties` — is git-ignored). After changing anything in `src/`
+or the installed plugins, resync it:
 
 ```bash
 npm run build
-npx cap add android   # first time only
-npx cap sync android   # after any change to src/ or plugins
+npx cap sync android   # copies the new web build + plugins into android/
 npx cap open android    # opens the project in Android Studio
 ```
 
 ### CI: automatic APK build
 
-`.github/workflows/android-build.yml` does the same steps on every push:
-build the web app, generate the Android project, compile a debug APK with
-Gradle, and upload it as a workflow artifact named
-`photo-gallery-debug-apk`, downloadable from the Actions run's summary
+`.github/workflows/build-apk.yml` does the same steps on every push to
+`main`: install deps, build the web app, sync Capacitor into `android/`,
+then build a debug APK with Gradle and upload it as a workflow artifact
+(`IonicCalculator-APK`), downloadable from the Actions run's summary
 page.

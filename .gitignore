@@ -9,6 +9,5 @@ dist-ssr/
 .vscode/*
 !.vscode/extensions.json
 
-android/
 ios/
 .env
